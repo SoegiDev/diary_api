@@ -1,0 +1,7 @@
+PATCH  http://localhost:8000/api/entry/1/edit HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlYXQiOjE2NzIzMjg2NzAsImlhdCI6MTY3MjMyNjY3MCwiaWQiOjF9.91qoUoOXkXri6fz0bqtnsDQSwEPM-peKhgCgzekgMfY
+
+{
+    "content": "Test Content Pertama Edit 6"
+}
