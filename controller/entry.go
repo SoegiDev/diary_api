@@ -59,8 +59,8 @@ func UpdateContent(context *gin.Context) {
 	// Get model if exist
 	id := context.Param("ID")
 	data_entries, err := model.FindEntryById(id)
-	if err != nil || data_entries == nil {
-		context.JSON(http.StatusBadRequest, gin.H{"error": "Record not found!"})
+	if err != nil {
+		context.JSON(http.StatusNotFound, gin.H{"error": "Record not found!"})
 		return
 	}
 
@@ -80,8 +80,8 @@ func UpdateContent(context *gin.Context) {
 
 	// ddt := model.Entry{Content: input.Content}
 	// database.Database.Model(&entryContent).Updates(ddt)
-	var entry model.Entry
-	updatedEntry, err := entry.ChangeData(id, input)
+
+	updatedEntry, err := data_entries.ChangeData(id, input)
 	if err != nil {
 		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return

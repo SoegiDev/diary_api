@@ -19,10 +19,7 @@ type User struct {
 
 func (user *User) Save() (*User, error) {
 	err := database.Database.Create(&user).Error
-	if err != nil {
-		return &User{}, err
-	}
-	return user, nil
+	return user, err
 }
 
 func (user *User) BeforeSave(*gorm.DB) error {
@@ -41,18 +38,12 @@ func (user *User) ValidatePassword(password string) error {
 
 func FindUserByUsername(username string) (User, error) {
 	var user User
-	err := database.Database.Where("username=?", username).Find(&user).Error
-	if err != nil {
-		return User{}, err
-	}
-	return user, nil
+	err := database.Database.Where("username=?", username).First(&user).Error
+	return user, err
 }
 
 func FindUserById(id uint) (User, error) {
 	var user User
-	err := database.Database.Preload("Entries_data").Where("ID=?", id).Find(&user).Error
-	if err != nil {
-		return User{}, err
-	}
-	return user, nil
+	err := database.Database.Preload("Entries_data").Where("ID=?", id).First(&user).Error
+	return user, err
 }

@@ -47,10 +47,7 @@ func CurrentUser(context *gin.Context) (model.User, error) {
 	userId := uint(claims["id"].(float64))
 
 	user, err := model.FindUserById(userId)
-	if err != nil {
-		return model.User{}, err
-	}
-	return user, nil
+	return user, err
 }
 
 func getToken(context *gin.Context) (*jwt.Token, error) {
