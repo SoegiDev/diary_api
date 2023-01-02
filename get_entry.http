@@ -1,3 +1,3 @@
 GET http://localhost:8000/api/entry HTTP/1.1
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlYXQiOjE2NzIzMjg2NzAsImlhdCI6MTY3MjMyNjY3MCwiaWQiOjF9.91qoUoOXkXri6fz0bqtnsDQSwEPM-peKhgCgzekgMfY
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NzI2NzQ4NzgsImlkIjoiMjM1ZGU3ZWMtNjMyZC00NTM0LWIwMWItNGEyOWFlYTNmMjQzIn0.GErgg5Vg7gzqJcLzEyJSficrRFBlEE-wK7PY1ImrGYE

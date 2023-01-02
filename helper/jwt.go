@@ -19,8 +19,7 @@ func GenerateJWT(user model.User) (string, error) {
 	tokenTTL, _ := strconv.Atoi(os.Getenv("TOKEN_TTL"))
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
 		"id":  user.ID,
-		"iat": time.Now().Unix(),
-		"eat": time.Now().Add(time.Second * time.Duration(tokenTTL)).Unix(),
+		"exp": time.Now().Add(time.Second * time.Duration(tokenTTL)).Unix(),
 	})
 	return token.SignedString(privateKey)
 }
@@ -34,6 +33,10 @@ func ValidateJWT(context *gin.Context) error {
 	if ok && token.Valid {
 		return nil
 	}
+	if !ok || !token.Valid {
+		return err
+	}
+
 	return errors.New("invalid token provided")
 }
 
@@ -44,7 +47,7 @@ func CurrentUser(context *gin.Context) (model.User, error) {
 	}
 	token, _ := getToken(context)
 	claims, _ := token.Claims.(jwt.MapClaims)
-	userId := uint(claims["id"].(float64))
+	userId := claims["id"].(string)
 
 	user, err := model.FindUserById(userId)
 	return user, err

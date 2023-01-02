@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/google/uuid"
 )
 
 func AddEntry(context *gin.Context) {
@@ -23,7 +24,7 @@ func AddEntry(context *gin.Context) {
 	}
 
 	input.UserID = user.ID
-
+	input.ID = uuid.New()
 	savedEntry, err := input.Save()
 
 	if err != nil {
@@ -42,7 +43,7 @@ func GetAllEntries(context *gin.Context) {
 		return
 	}
 
-	context.JSON(http.StatusOK, gin.H{"data": user.Entries_data})
+	context.JSON(http.StatusOK, gin.H{"data": user.Entries})
 }
 
 func FindEntry(context *gin.Context) { // Get model if exist

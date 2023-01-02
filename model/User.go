@@ -5,17 +5,13 @@ import (
 	"strings"
 
 	"diary_api/database"
+	"diary_api/schema"
 
 	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
 )
 
-type User struct {
-	gorm.Model
-	Username     string `gorm:"size:255;not null;unique" json:"username"`
-	Password     string `gorm:"size:255;not null;" json:"-"`
-	Entries_data []Entry
-}
+type User schema.User
 
 func (user *User) Save() (*User, error) {
 	err := database.Database.Create(&user).Error
@@ -42,8 +38,8 @@ func FindUserByUsername(username string) (User, error) {
 	return user, err
 }
 
-func FindUserById(id uint) (User, error) {
+func FindUserById(id string) (User, error) {
 	var user User
-	err := database.Database.Preload("Entries_data").Where("ID=?", id).First(&user).Error
+	err := database.Database.Preload("Entries").Where("id=?", id).First(&user).Error
 	return user, err
 }

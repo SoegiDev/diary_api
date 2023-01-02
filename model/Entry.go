@@ -2,25 +2,12 @@ package model
 
 import (
 	"diary_api/database"
+	"diary_api/schema"
 	"strconv"
-
-	"gorm.io/gorm"
 )
 
-type UpdateContent struct {
-	Content string `json:"content"`
-	UserID  uint
-}
-
-type Entry struct {
-	gorm.Model
-	Content string `gorm:"type:text" json:"content"`
-	UserID  uint
-}
-
-func (Entry) TableName() string {
-	return "entries_data"
-}
+type Entry schema.Entries
+type UpdateContent schema.UpdateContent
 
 func (entry *Entry) Save() (*Entry, error) {
 	err := database.Database.Create(&entry).Error

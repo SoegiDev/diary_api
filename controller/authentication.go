@@ -3,13 +3,19 @@ package controller
 import (
 	"diary_api/helper"
 	"diary_api/model"
+	"diary_api/schema"
+	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/google/uuid"
 )
 
+type RegisterSchema schema.Register
+type LoginSchema schema.Login
+
 func Register(context *gin.Context) {
-	var input model.AuthenticationInput
+	var input RegisterSchema
 
 	if err := context.ShouldBindJSON(&input); err != nil {
 		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -17,6 +23,8 @@ func Register(context *gin.Context) {
 	}
 
 	user := model.User{
+		ID:       uuid.New(),
+		Email:    input.Email,
 		Username: input.Username,
 		Password: input.Password,
 	}
@@ -32,24 +40,23 @@ func Register(context *gin.Context) {
 }
 
 func Login(context *gin.Context) {
-	var input model.AuthenticationInput
+	var input LoginSchema
 
 	if err := context.ShouldBindJSON(&input); err != nil {
 		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-
 	user, err := model.FindUserByUsername(input.Username)
-
+	fmt.Println(&user, err)
 	if err != nil {
-		context.JSON(http.StatusNotFound, gin.H{"error": "User Not Found"})
+		context.JSON(http.StatusNotFound, gin.H{"msg": "User Not Found"})
 		return
 	}
 
 	err = user.ValidatePassword(input.Password)
 
 	if err != nil {
-		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		context.JSON(http.StatusBadRequest, gin.H{"msg": "Wrong Password"})
 		return
 	}
 

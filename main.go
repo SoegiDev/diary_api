@@ -4,7 +4,7 @@ import (
 	"diary_api/controller"
 	"diary_api/database"
 	"diary_api/middleware"
-	"diary_api/model"
+	"diary_api/schema"
 	"fmt"
 	"log"
 
@@ -27,8 +27,8 @@ func loadEnv() {
 
 func loadDatabase() {
 	database.Connect()
-	database.Database.AutoMigrate(&model.User{})
-	database.Database.AutoMigrate(&model.Entry{})
+	database.Database.AutoMigrate(&schema.User{})
+	database.Database.AutoMigrate(&schema.Entries{})
 }
 
 func serveApplication() {
