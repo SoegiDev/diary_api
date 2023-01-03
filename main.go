@@ -27,8 +27,10 @@ func loadEnv() {
 
 func loadDatabase() {
 	database.Connect()
+	database.Database.AutoMigrate(&schema.Role{})
 	database.Database.AutoMigrate(&schema.User{})
-	database.Database.AutoMigrate(&schema.Entries{})
+	database.Database.AutoMigrate(&schema.UserRoles{})
+	// database.Database.AutoMigrate(&schema.Entries{})
 }
 
 func serveApplication() {
@@ -44,6 +46,10 @@ func serveApplication() {
 	protectedRoutes.GET("/entry", controller.GetAllEntries)
 	protectedRoutes.GET("/entry/:ID", controller.FindEntry)
 	protectedRoutes.PATCH("/entry/:ID/edit", controller.UpdateContent)
+
+	// Role //
+	specialRoute := router.Group("/special")
+	specialRoute.POST("/add_role", controller.AddRole)
 
 	router.Run(":8000")
 	fmt.Println("Server running on port 8000")

@@ -21,9 +21,11 @@ func Register(context *gin.Context) {
 		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
+	fmt.Println(input)
 
 	user := model.User{
-		ID:       uuid.New(),
+		Id:       uuid.New(),
+		Roles:    []*schema.Role{{Name: "Admin"}},
 		Email:    input.Email,
 		Username: input.Username,
 		Password: input.Password,
@@ -35,7 +37,7 @@ func Register(context *gin.Context) {
 		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-
+	fmt.Println(input)
 	context.JSON(http.StatusCreated, gin.H{"user": savedUser})
 }
 

@@ -1,0 +1,7 @@
+POST http://localhost:8000/special/add_role HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NzI2NzQ4NzgsImlkIjoiMjM1ZGU3ZWMtNjMyZC00NTM0LWIwMWItNGEyOWFlYTNmMjQzIn0.GErgg5Vg7gzqJcLzEyJSficrRFBlEE-wK7PY1ImrGYE
+
+{
+    "name": "User"
+}

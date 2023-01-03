@@ -13,7 +13,8 @@ type Entries struct {
 	UserID    uuid.UUID `json:"userId" gorm:"type:uuid"`
 	CreatedAt time.Time
 	UpdatedAt time.Time
-	Deleted   gorm.DeletedAt
+	DeletedAt gorm.DeletedAt
+	Deleted   bool `gorm:"type:bool" json:"deleted"`
 }
 
 func (Entries) TableName() string {

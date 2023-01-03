@@ -23,7 +23,7 @@ func AddEntry(context *gin.Context) {
 		return
 	}
 
-	input.UserID = user.ID
+	input.UserID = user.Id
 	input.ID = uuid.New()
 	savedEntry, err := input.Save()
 
@@ -73,7 +73,7 @@ func UpdateContent(context *gin.Context) {
 
 	// Validate input
 	var input model.UpdateContent
-	input.UserID = user.ID
+	input.UserID = user.Id
 	if err := context.ShouldBindJSON(&input); err != nil {
 		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
